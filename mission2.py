@@ -1,240 +1,131 @@
-#mission2过独木桥
-#coding=utf8
-#
-# #实现功能:让机器人跟随绿色独木桥，先上桥，再过桥
-#
-import cv2
+#mission2 上台阶
+#shymuel 7.26
+#摄像头跟随台阶移动
+
+import cv2 as cv
 import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 import time
 import math
-import urllib
-import socket
-import signal
-import threading
-import LSC_Client
+import lsc
 
-stream = None
-bytes = ''
-Running = False
-
-step = 0
-Dist = 0.0
-rads = [0,0,0,0,0,0,0,0,0]
-lastR = 0
-count = 0
-centerX = 0
-centerY = 0 
-xc = False
-
-lsc = LSC_Client.LSC_Client()
-
-
-#暂停信号的回调
-def Stop(signum, frame):
-    global Running
-
-    print("Stop: CV摄像头追踪")
-    if Running is True:
-        Running = False
-        centerX = 0
-        count = 0
-        rads = [0,0,0,0,0,0,0,0,0,0]
-        lastR = 0
-        xc = False
-
-#继续信号的回调
-def Continue(signum, frame):
-    global stream
-    global Running 
-    print("Continue: CV摄像头追踪")
-    if Running is False:
-        #开关一下连接
-        if stream:
-            stream.close()
-        stream = urllib.urlopen("http://127.0.0.1:8080/?action=stream?dummy=param.mjpg")
-        bytes = ''
-        Running = True
-
-#注册信号和回调
-signal.signal(signal.SIGTSTP, Stop)
-signal.signal(signal.SIGCONT, Continue)
-
-#数值映射
-def leMap(x, in_min, in_max, out_min, out_max):
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
-
-#找出最大的轮廓
-def getAreaMaxContour(contours) :
-        contour_area_temp = 0
-        contour_area_max = 0
-        area_max_contour = None;
-
-        for c in contours : #历便所有轮廓
-            contour_area_temp = math.fabs(cv2.contourArea(c)) #计算面积
-            if contour_area_temp > contour_area_max :
-                contour_area_max = contour_area_temp
-                if contour_area_temp > 50:  #限制最小面积
-                    area_max_contour = c
-
-        return area_max_contour  #返回最大面积
-
-
-def logic():
-    global step
-    global Dist
-    global lsc
-    global xc
-    global centerX
-    global centerY
-    
-    while True:
-        if Running is True:
-            if xc is True:
-                if step == 0:
-                    if centerX > 440:  #不在中心，根据方向让机器人转向一步
-                        lsc.RunActionGroup(4,1)
-                        lsc.WaitForFinish(3000)
-                        time.sleep(0.3)
-                    elif centerX < 200:
-                        lsc.RunActionGroup(3,1)
-                        lsc.WaitForFinish(3000)
-                        time.sleep(0.3)
-                    else:
-                        step = 1 #转到步骤1
-                        pass
-                elif step == 1:
-                    if Dist > 30:  #检查距离是不是在 30 到 20之间，根据情况做对应操作
-                        lsc.RunActionGroup(1,1)  #大于30 就前进，去靠近目标
-                        lsc.WaitForFinish(3000) #等待动作执行完
-                    elif Dist < 20 and Dist > 0:  
-                        lsc.RunActionGroup(2,1)#小于20就后退，去远离目标
-                        lsc.WaitForFinish(3000) #等待动作执行完
-                    else:
-                        pass
-                    step = 0 #回到步骤0
-
-            xc = False
-        time.sleep(0.01)
-
-#启动跟随控制六足动作的线程
-th1 = threading.Thread(target=logic)
-th1.setDaemon(True)
-th1.start()
-
-pitch = 1500
+pitch = 1500 #初始位置为中间位置
 yaw = 1500
-lsc.MoveServo(19, 1500,1000)  #先让摄像头云台舵机转到对于中间位置
-lsc.MoveServo(20, 1500,1000)
+lsc.MoveServo(6, 1500,1000)  #让摄像头云台的两个舵机都转动到中间位置
+lsc.MoveServo(7, 1500,1000)
 
-while True:
-  if Running is True:
-    orgFrame = None
-    try:
-        bytes += stream.read(4096)  #接收数据v
-        a = bytes.find('\xff\xd8')  #找到帧头
-        b = bytes.find('\xff\xd9')  #找到帧尾
-        if a != -1 and b != -1:
-            jpg = bytes[a:b+2]  #取出数据
-            bytes = bytes[b+2:]
+def calc_bottom(rectangle):
+    print(rectangle)
+    return rectangle[0][1] + 0.5*(rectangle[1][0]* math.sin(math.fabs(rectangle[2])) +rectangle[1][1]*math.cos(math.fabs(rectangle[2])))
 
-            #解码图片
-            orgFrame = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.CV_LOAD_IMAGE_COLOR)
-            #将图片缩放到320*240
-            orgFrame = cv2.resize(orgFrame, (320,240), interpolation = cv2.INTER_CUBIC)
-    except Exception as e:
-        print(e)
+def adjustCamera(rect, pitch ,yaw):
+    xc = True #xc代表是否调整X方向
+    yc = True #yc代表是否调整y方向
+    centerX = rect[0][1]
+    centerY = rect[0][0]
+
+    # 范围为0-640
+    if centerX > 620:
+        pitch = pitch - 50  # 根据中心位置确定要调整的舵机角度,距离中心越大调整幅度就越大
+    elif centerX > 540:
+        pitch = pitch - 30
+    elif centerX > 380:
+        pitch = pitch - 15
+    elif centerX > 325:
+        pitch = pitch - 2
+    elif centerX > 315:
+        xc = False  # 在中心范围内，不用调整舵机
+    elif centerX > 260:
+        pitch = pitch + 2
+    elif centerX > 100:
+        pitch = pitch + 15
+    elif centerX > 20:
+        pitch = pitch + 30
+    elif centerX > 0:
+        pitch = pitch + 50
+    else:
+        xc = False  # 屏幕中没有球， 不调整舵机
+
+    # 范围为0-480
+    if centerY > 450:
+        yaw = yaw + 40  # 根据中心位置确定要调整的舵机角度,距离中心越大调整幅度就越大
+    elif centerY > 380:
+        yaw = yaw + 25
+    elif centerY > 310:
+        yaw = yaw + 15
+    elif centerY > 245:
+        yaw = yaw + 2
+    elif centerY > 235:
+        yc = False
+    elif centerY > 170:
+        yaw = yaw - 2
+    elif centerY > 100:
+        yaw = yaw - 15
+    elif centerY > 30:
+        yaw = yaw - 25
+    elif centerY > 0:
+        yaw = yaw - 40
+    else:
+        yc = False
+
+    if xc is True:  # 舵机角度被改变
+        pitch = pitch if pitch <= 2500 else 2500  # 限制舵机角度的最大最小值
+        pitch = pitch if pitch >= 500 else 500
+        lsc.MoveServo(6, pitch, 50)  # 让舵机转到新的角度去
+
+    if yc is True:
+        yaw = yaw if yaw <= 2500 else 2500
+        yaw = yaw if yaw >= 500 else 500
+        lsc.MoveServo(7, yaw, 50)
+
+    return pitch, yaw
+
+
+def findStep(frame):
+    HSV = cv.cvtColor(frame, cv.COLOR_BGR2HSV)  # 把BGR图像转换为HSV格式
+    mask1 = cv.inRange(HSV, np.array([0, 43, 46]), np.array([10, 255, 255]))
+    mask2 = cv.inRange(HSV, np.array([156, 43, 46]), np.array([180, 255, 255]))
+    mask2 = cv.bitwise_or(mask1, mask2, mask=None)
+
+    #print(mask2.shape)  #480*640
+
+    cnts, hierarchy = cv.findContours(mask2,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_NONE)
+
+    if cnts == []:
+        return 0
+    c = max(cnts, key=cv.contourArea)
+    return cv.minAreaRect(c)
+
+cap = cv.VideoCapture(0)
+
+while cap.isOpened():
+    grabbed, frame = cap.read()
+    # print(frame.shape)
+    rect = findStep(frame) #最小外接方框
+    pitch, yaw = adjustCamera(rect, pitch, yaw) #调整摄像头
+
+    if (rect!=0):
+        bottom = calc_bottom(rect)
+    print(bottom)
+
+    if rect == 0:
         continue
 
-    if orgFrame is not None:
-        height,width = orgFrame.shape[:2]
-        frame = orgFrame
-        frame = cv2.GaussianBlur(frame, (5,5), 0); #高斯模糊
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV); #将图片转换到HSV空间
+    box = cv.boxPoints(rect)
+    box = np.int0(box)
+    cv.drawContours(frame, [box], -1, (0, 255, 0), 2)
+    cv.line(frame, (box[1, 0], box[1, 1]), (box[3, 0], box[3, 1]), 2, 2)
+    cv.line(frame, (box[0, 0], box[0, 1]), (box[2, 0], box[2, 1]), 2, 2)
+    cv.imshow("capture", frame)
 
-        #分离出各个HSV通道
-        h, s, v = cv2.split(frame)
-        v = cv2.equalizeHist(v)
-        frame = cv2.merge((h,s,v))
+    if cv.waitKey(33) == 27:
+        break
 
-        frame = cv2.inRange(frame, (68,70,120), (82, 255, 255))  #根据目标的颜色对图片进行二值化
-        frame = cv2.morphologyEx(frame, cv2.MORPH_CLOSE, (4,4)) #闭操作
-        (contours, hierarchy) = cv2.findContours(frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE,(0,0)) #找到所有的轮廓
-        areaMaxContour = getAreaMaxContour(contours)  #找到其中最大的轮廓
-        centerX = 0
-        centerY = 0 
-
-        if areaMaxContour is not None:
-            ((centerX, centerY), rad) = cv2.minEnclosingCircle(areaMaxContour) #获得最小外接圆
-            #cv2.circle(orgFrame,(int(centerX), int(centerY)), int(rad), (255,0,0), 1)
-            centerX = leMap(centerX, 0.0, 320.0, 0.0, 640.0)  #将数据从0-320 映射到 0-640
-            centerY = leMap(centerY, 0.0, 240.0, 0.0, 480.0)
-            rads.append(rad) #追加新的最小外接圆半径
-        else:
-            rads.append(0)  #没找到球就追加0
-        rads = rads[1:]  #将最久的一个数据去掉
+cap.release()
+cv.destroyWindow("capture")
 
 
-    ######根据图像计算距离##########
-        alr = 0
-        for r in rads:
-            alr = alr + r
-        alr = alr / 10  #计算最近的10次的最小外接圆直径
-        lastR = lastR * 0.7 + alr * 0.3  #简单滤波
-        count += 1
-        if count >= 5:  #每5次更新一次距离
-            if lastR >= 2:  #半径太小就直接让就距离为0, 0就是没有目标
-                Dist = 40 * 47.0 / (lastR * 2) # 40 是我们的目标小球的，47.0是我们我们的摄像头焦距 
-                Dist = Dist if Dist < 100 else 0 #限制量程
-            else:
-                Dist = 0
-            count = 0
-    ####################################
 
-
-        if areaMaxContour is not None:
-            yc = True
-            if centerX > 0:
-                xc = True
-            else:
-                xc = False
-
-            if centerY > 450:
-                yaw = yaw + 40
-            elif centerY > 380:
-                yaw = yaw + 25
-            elif centerY > 310:
-                yaw = yaw + 15
-            elif centerY > 245:
-                yaw = yaw + 2
-            elif centerY > 235:
-                yc = False
-            elif centerY > 170:
-                yaw = yaw - 2
-            elif centerY > 100:
-                yaw = yaw - 15
-            elif centerY > 30:
-                yaw = yaw - 25
-            elif centerY > 0:
-                yaw = yaw - 40
-            else:
-                yc = False
-
-
-#            if yc is True:
-#                yaw = yaw if yaw <= 2500 else 2500
-#                yaw = yaw if yaw >= 500 else 500
-#                lsc.MoveServo(20, yaw, 50)
-        else:
-            pass
-
-#        if cv2.waitKey(1) & 0xFF == ord('q'):
-#            break
-  else:
-      bytes = ''
-      time.sleep(0.1)
-      
-#cv2.destroyAllWindows()
 
 
