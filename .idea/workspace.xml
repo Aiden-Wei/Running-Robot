@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d957631d-fa1b-4e6d-aad9-d78e263f2f3d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/human_code/line_patrol.py" beforeDir="false" afterPath="$PROJECT_DIR$/human_code/line_patrol.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human_code/missions/missions.py" beforeDir="false" afterPath="$PROJECT_DIR$/human_code/missions/missions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,8 +18,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/human_code/missions/missions.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="193">
-                  <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+                <state relative-caret-position="281">
+                  <caret line="93" column="21" selection-start-line="93" selection-start-column="21" selection-end-line="93" selection-end-column="21" />
                   <folding>
                     <element signature="e#44#54#0" expanded="true" />
                   </folding>
@@ -33,13 +32,10 @@
       <split-second>
         <leaf>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/human_code/line_patrol.py">
+            <entry file="file://$PROJECT_DIR$/human_code/missions/mission1.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="132">
-                  <caret line="321" column="48" selection-start-line="321" selection-start-column="48" selection-end-line="321" selection-end-column="48" />
-                  <folding>
-                    <element signature="e#59#69#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="217">
+                  <caret line="189" column="51" lean-forward="true" selection-start-line="189" selection-start-column="51" selection-end-line="189" selection-end-column="51" />
                 </state>
               </provider>
             </entry>
@@ -51,6 +47,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>ret</find>
+      <find>contours</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -121,7 +118,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.missions">
+    <configuration name="mission1" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Running-Robot" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/human_code/missions" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/human_code/missions/mission1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="missions" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Running-Robot" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,6 +164,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.missions" />
+        <item itemvalue="Python.mission1" />
       </list>
     </recent_temporary>
   </component>
@@ -185,6 +204,32 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/human_code/config_serial_servo.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -203,7 +248,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/human_code/line_patrol.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
+        <state relative-caret-position="155">
           <caret line="321" column="48" selection-start-line="321" selection-start-column="48" selection-end-line="321" selection-end-column="48" />
           <folding>
             <element signature="e#59#69#0" expanded="true" />
@@ -211,10 +256,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/human_code/missions/mission1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="189" column="51" lean-forward="true" selection-start-line="189" selection-start-column="51" selection-end-line="189" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/human_code/missions/missions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+        <state relative-caret-position="281">
+          <caret line="93" column="21" selection-start-line="93" selection-start-column="21" selection-end-line="93" selection-end-column="21" />
           <folding>
             <element signature="e#44#54#0" expanded="true" />
           </folding>
