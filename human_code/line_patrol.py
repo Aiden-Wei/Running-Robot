@@ -7,10 +7,8 @@ import time
 import threading
 import math
 import numpy as np
-import human_code.missions as missions
 
 # import Serial_Servo_Running as SSR
-import signal
 # import PWMServo
 
 debug = 1
