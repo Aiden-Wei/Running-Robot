@@ -1,4 +1,4 @@
-#shymuel 7.23
+#tony 7.26
 #任务一，过竖直横杆
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
