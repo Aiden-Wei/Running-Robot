@@ -58,7 +58,7 @@ def return_color(event, x, y, flags, param):
         print(frame_hsv[y,x])
 
 
-def getAreaMaxContour(contours, area=1):
+def getAreaMaxContour(contours, area=100):
     contour_area_max = 0
     area_max_contour = None
 
@@ -70,10 +70,10 @@ def getAreaMaxContour(contours, area=1):
                 area_max_contour = c
     return area_max_contour
 
-cap = cv2.VideoCapture(0)
-if __name__ == "__main__":
-# def through_railway(cap):
-#     cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0)
+# if __name__ == "__main__":
+def through_railway(cap):
+    cap = cv2.VideoCapture(0)
     while True:
         ret, frames = cap.read()
         frame_hsv = frames.copy()

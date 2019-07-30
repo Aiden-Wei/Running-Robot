@@ -166,7 +166,7 @@ def Tracing(orgimage, r_w = resize_width, r_h = resize_height, r = roi, l_c = li
     orgframe = cv2.GaussianBlur(orgframe, (3,3), 0)#高斯模糊，去噪
 
     #边缘检测测试
-    orgframe_gaussion = cv2.GaussianBlur(orgframe, (3,3), 0)#高斯模糊
+    orgframe_gaussion = cv2.GaussianBlur(orgframe, (3, 3), 0)#高斯模糊
     orgframe_sobel = cv2.Sobel(orgframe_gaussion, cv2.CV_16S, 0, 1)
     orgframe_sobel = cv2.convertScaleAbs(orgframe_sobel)
     cv2.imshow("orgframe_sobel", orgframe_sobel)
