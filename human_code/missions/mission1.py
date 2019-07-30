@@ -9,7 +9,7 @@ import numpy as np
 import time
 import threading
 import math
-import Serial_Servo_Running as SSR
+import human_code.Serial_Servo_Running as SSR
 import signal
 import PWMServo
 
