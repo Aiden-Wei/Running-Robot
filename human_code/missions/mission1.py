@@ -6,22 +6,7 @@ import time
 import numpy as np
 import math
 
-import human_code.Serial_Servo_Running as SSR
-import signal
-import human_code.PWMServo
 
-debug = 1
-Running = True
-stream = "http://127.0.0.1:8080/?action=stream?dummy=param.mjpg"
-cap = cv2.VideoCapture(stream)
-
-orgFrame = None
-get_image_ok = False
-get_line = False
-
-go_straight = '1'
-turn_left   = 'turn_left'
-turn_right  = 'turn_right'
 
 #定义一些参数
 ori_width  =  int(4*160)#原始图像640x480
@@ -48,7 +33,6 @@ def edge_detection(orgimage, r_w = resize_width, r_h = resize_height, r = roi, l
     cv2.imshow("orgframe_sobel", orgframe_sobel)
     # cv2.waitKey(30)
 
-cap = cv2.VideoCapture(0)
 
 # 设置黄色的范围
 color_range_yellow = [([16, 100, 100], [30, 230, 255])]
@@ -65,12 +49,14 @@ def color_detect(frame, color_range):
 
         cv2.imshow("color_yellow", frame_yellow)
 
+
 def return_color(event, x, y, flags, param):
     global frame_hsv
     global cal_h, cal_s, cal_v
     if event == cv2.EVENT_LBUTTONDOWN:
         print((x,y))
         print(frame_hsv[y,x])
+
 
 def getAreaMaxContour(contours, area=1):
     contour_area_max = 0
@@ -84,7 +70,10 @@ def getAreaMaxContour(contours, area=1):
                 area_max_contour = c
     return area_max_contour
 
+cap = cv2.VideoCapture(0)
 if __name__ == "__main__":
+# def through_railway(cap):
+#     cap = cv2.VideoCapture(0)
     while True:
         ret, frames = cap.read()
         frame_hsv = frames.copy()
@@ -105,8 +94,8 @@ if __name__ == "__main__":
                 cv2.line(frames, (box[0, 0], box[0, 1]), (box[2, 0], box[2, 1]), line_color, line_thickness)
 
             cv2.imshow("frame", frames)
-            if  cv2.waitKey(1)==27:
+            if cv2.waitKey(30)==27:
                 break
-            if cnt_large is None:
-                break
+            # if cnt_large is None:
+            #     break
     cv2.destroyAllWindows()

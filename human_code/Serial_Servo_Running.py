@@ -12,6 +12,11 @@ runningAction = True
 stopRunning = False
 
 
+go_straight = '1'
+turn_left   = 'turn_left'
+turn_right  = 'turn_right'
+
+
 def serial_setServo(s_id, pos, s_time):
     if pos > 1000:
         pos = 1000

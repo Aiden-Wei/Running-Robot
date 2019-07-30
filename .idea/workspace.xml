@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d957631d-fa1b-4e6d-aad9-d78e263f2f3d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/human_code/missions/commands.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/human_code/missions/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human_code/Serial_Servo_Running.py" beforeDir="false" afterPath="$PROJECT_DIR$/human_code/Serial_Servo_Running.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/human_code/missions/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/human_code/missions/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/human_code/missions/mission1.py" beforeDir="false" afterPath="$PROJECT_DIR$/human_code/missions/mission1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,8 +20,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/human_code/missions/controller.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="266">
-                  <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+                <state relative-caret-position="164">
+                  <caret line="64" column="16" lean-forward="true" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -30,15 +29,32 @@
               </provider>
             </entry>
           </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/human_code/missions/mission3.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="589">
+                  <caret line="32" selection-start-line="32" selection-end-line="33" selection-end-column="16" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/human_code/missions/mission2.py">
+              <provider selected="true" editor-type-id="text-editor" />
+            </entry>
+          </file>
         </leaf>
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/human_code/missions/mission1.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="155">
-                  <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+                <state relative-caret-position="152">
+                  <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+                  <folding>
+                    <element signature="e#44#54#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -46,22 +62,32 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/human_code/missions/commands.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="38">
-                  <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+                <state>
+                  <caret selection-end-line="2" selection-end-column="26" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/human_code/SerialServoCmd.py">
-              <provider selected="true" editor-type-id="text-editor" />
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/human_code/Serial_Servo_Running.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="114">
-                  <caret line="6" column="60" selection-start-line="6" selection-start-column="60" selection-end-line="6" selection-end-column="60" />
+                <state relative-caret-position="144">
+                  <caret line="161" column="20" selection-start-line="161" selection-start-column="20" selection-end-line="161" selection-end-column="20" />
+                  <folding>
+                    <element signature="e#41#52#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/human_code/line_patrol.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-151">
+                  <caret line="263" column="35" selection-start-line="263" selection-start-column="28" selection-end-line="263" selection-end-column="35" />
+                  <folding>
+                    <element signature="e#59#69#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -82,6 +108,7 @@
       <find>ret</find>
       <find>contours</find>
       <find>SSR</find>
+      <find>running</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -92,10 +119,10 @@
       <list>
         <option value="$PROJECT_DIR$/human_code/line_patrol.py" />
         <option value="$PROJECT_DIR$/human_code/missions/missions.py" />
-        <option value="$PROJECT_DIR$/human_code/Serial_Servo_Running.py" />
         <option value="$PROJECT_DIR$/human_code/missions/commands.py" />
-        <option value="$PROJECT_DIR$/human_code/missions/controller.py" />
         <option value="$PROJECT_DIR$/human_code/missions/mission1.py" />
+        <option value="$PROJECT_DIR$/human_code/Serial_Servo_Running.py" />
+        <option value="$PROJECT_DIR$/human_code/missions/controller.py" />
       </list>
     </option>
   </component>
@@ -223,8 +250,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.controller" />
-        <item itemvalue="Python.missions" />
         <item itemvalue="Python.mission1" />
+        <item itemvalue="Python.missions" />
       </list>
     </recent_temporary>
   </component>
@@ -245,7 +272,7 @@
     <frame x="-7" y="-7" width="1295" height="704" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15329626" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15329626" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -256,9 +283,9 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32867134" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32692307" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.16083916" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32867134" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -315,57 +342,71 @@
         <state relative-caret-position="-8" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/human_code/line_patrol.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1307">
-          <caret line="321" column="48" selection-start-line="321" selection-start-column="48" selection-end-line="321" selection-end-column="48" />
-          <folding>
-            <element signature="e#59#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/human_code/missions/missions.py" />
     <entry file="file://$PROJECT_DIR$/human_code/SerialServoCmd.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/human_code/Serial_Servo_Running.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="60" selection-start-line="6" selection-start-column="60" selection-end-line="6" selection-end-column="60" />
+        <state relative-caret-position="38">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#37#50#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/human_code/missions/commands.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        <state>
+          <caret selection-end-line="2" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/human_code/missions/missions.py">
+    <entry file="file://$PROJECT_DIR$/human_code/missions/mission1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1102">
-          <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
+        <state relative-caret-position="152">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="e#44#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/human_code/missions/controller.py">
+    <entry file="file://$PROJECT_DIR$/human_code/Serial_Servo_Running.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+        <state relative-caret-position="144">
+          <caret line="161" column="20" selection-start-line="161" selection-start-column="20" selection-end-line="161" selection-end-column="20" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#41#52#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/human_code/missions/mission1.py">
+    <entry file="file://$PROJECT_DIR$/human_code/line_patrol.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="-151">
+          <caret line="263" column="35" selection-start-line="263" selection-start-column="28" selection-end-line="263" selection-end-column="35" />
+          <folding>
+            <element signature="e#59#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/human_code/missions/mission2.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/human_code/missions/mission3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="32" selection-start-line="32" selection-end-line="33" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/human_code/missions/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="64" column="16" lean-forward="true" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
