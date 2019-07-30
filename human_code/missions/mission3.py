@@ -1,47 +1,43 @@
 #mission3 走雷区
 #shymuel 7.26
-import cv2.cv as cv
+import cv2 as cv
 import math
+import numpy as np
+from matplotlib import pyplot as plt
 
-im = cv.LoadImage('img/road.png', cv.CV_LOAD_IMAGE_GRAYSCALE)
+def swap(t1, t2):
+    t2, t1 = t1, t2
+    return
 
-pi = math.pi  # Pi value
+cap = cv.VideoCapture('03.mp4')
 
-dst = cv.CreateImage(cv.GetSize(im), 8, 1)
+while True:
+    flag, img = cap.read()
+    x, y = img.shape[0:2]
+    img=cv.resize(img, (int(y/1), int(x/1)))
 
-cv.Canny(im, dst, 200, 200)
-cv.Threshold(dst, dst, 100, 255, cv.CV_THRESH_BINARY)
+    gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
+    # xgrad = cv.Sobel(gray, cv.CV_16SC1, 1, 0) #x方向梯度
+    # ygrad = cv.Sobel(gray, cv.CV_16SC1, 0, 1) #y方向梯度
+    # edge_output = cv.Canny(xgrad, ygrad, 50, 150)
+    edge_output = cv.Canny(gray, 80, 255)
 
-# ---- Standard ----
-color_dst_standard = cv.CreateImage(cv.GetSize(im), 8, 3)
-cv.CvtColor(im, color_dst_standard, cv.CV_GRAY2BGR)  # Create output image in RGB to put red lines
+    cnts, hierarchy = cv.findContours(edge_output,cv.RETR_TREE,cv.CHAIN_APPROX_SIMPLE)
 
-lines = cv.HoughLines2(dst, cv.CreateMemStorage(0), cv.CV_HOUGH_STANDARD, 1, pi / 180, 100, 0, 0)
-for (rho, theta) in lines[:100]:
-    a = math.cos(theta)  # Calculate orientation in order to print them
-    b = math.sin(theta)
-    x0 = a * rho
-    y0 = b * rho
-    pt1 = (cv.Round(x0 + 1000 * (-b)), cv.Round(y0 + 1000 * (a)))
-    pt2 = (cv.Round(x0 - 1000 * (-b)), cv.Round(y0 - 1000 * (a)))
-    cv.Line(color_dst_standard, pt1, pt2, cv.CV_RGB(255, 0, 0), 2, 4)  # Draw the line
+    for i in cnts.size():
+        area = cv.contourArea(cnts[i])
+        # print(area)
+        swap(cnts[i], cnts[cnts.size() - 1]);
+        cnts.pop_back();
 
-# ---- Probabilistic ----
-color_dst_proba = cv.CreateImage(cv.GetSize(im), 8, 3)
-cv.CvtColor(im, color_dst_proba, cv.CV_GRAY2BGR)  # idem
+    cv.drawContours(img,cnts,-1,(0,0,255),3)
+    # print(cnts)
+    cv.imshow('circle', img)
+    cv.imshow('Canny', edge_output)
+    cv.waitKey(33)
+    if (cv.waitKey(1)=='s'):
+        while True:
+            if (cv.waitKey(1)=='c'):
+                break
 
-rho = 1
-theta = pi / 180
-thresh = 50
-minLength = 120  # Values can be changed approximately to fit your image edges
-maxGap = 20
-
-lines = cv.HoughLines2(dst, cv.CreateMemStorage(0), cv.CV_HOUGH_PROBABILISTIC, rho, theta, thresh, minLength, maxGap)
-for line in lines:
-    cv.Line(color_dst_proba, line[0], line[1], cv.CV_RGB(255, 0, 0), 2, 8)
-
-cv.ShowImage('Image', im)
-cv.ShowImage("Cannied", dst)
-cv.ShowImage("Hough Standard", color_dst_standard)
-cv.ShowImage("Hough Probabilistic", color_dst_proba)
-cv.WaitKey(0)
+cv.destroyAllWindows()
