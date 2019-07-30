@@ -1,8 +1,11 @@
 import threading as thr
 import numpy as np
 import cv2
+import math
 # 引入数据库
-import human_code.Serial_Servo_Running as cmd
+# import human_code.Serial_Servo_Running as cmd
+# import human_code.missions.commands as commands
+# from human_code.missions.mission1 import through_railway
 
 # stream = "http://127.0.0.1:8080/?action=stream?dummy=param.mjpg"
 # cap = cv2.VideoCapture(stream)
@@ -29,35 +32,49 @@ def video_cap():
                 break
 
 
-color_range_yellow = [([16, 100, 100], [30, 230, 255])]
-color_range_red = [()]
-
 mask = None
 
 
 def color_detect(frame, color_range):
-    global mask
     for (lower, upper) in color_range:
         lower = np.array(lower, dtype="uint8")  # 颜色下限
-        upper = np.array(upper, dtype="uint8")  # 颜色下限
+        upper = np.array(upper, dtype="uint8")  # 颜色上限
         mask = cv2.inRange(frame, lower, upper)
-        frame_yellow = cv2.bitwise_and(frame, frame, mask=mask)
-        cv2.imshow("color_yellow", frame_yellow)
-
+    return mask
 
 def is_through_rail():
-
-
+    global frame_hsv
+    color_range_yellow = [([16, 100, 100], [30, 230, 255])]
+    mask = color_detect(frame_hsv, color_range_yellow)
+    cnts, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_L1)  # 找出所有轮廓
+    contour_area_max = 0
+    area_max_contour = None
+    area = 0
+    for c in cnts:
+        contour_area_temp = math.fabs(cv2.contourArea(c))
+        if contour_area_temp > contour_area_max:
+            contour_area_max = contour_area_temp
+            if contour_area_temp > area:  # 面积大于1
+                area_max_contour = c
+    if area_max_contour is not None:
+        return False
+    else :
+        return True
 
 def mission_judge():
     global mission_cnt
-    if IsMission1():
-
+    if is_through_rail():
+        mission_cnt = 1
 
 # 默认线程向前走
 def default_thread():
-    cmd.running_action_group(0, 1)
+    # cmd.running_action_group(0, 1)
+    print("default threat")
 
+# 过横杆线程
+def through_rail_thread(the_cap):
+    # through_railway(the_cap)
+    print("through rail thread")
 
 # 判断哪一个任务
 def main():
@@ -65,7 +82,8 @@ def main():
     global quit_flag
     video_thr = thr.Thread(target=video_cap)
     video_thr.start()
-    default_thr = thr.Thread(target=default_thread())
+    default_thr = thr.Thread(target=default_thread)
+    through_railway_thr = thr.Thread(target=through_rail_thread, args=[cap])
 
     while True:
         if frame_rgb is not None and ret:
@@ -75,9 +93,14 @@ def main():
             控制线程的开启，在每个线程内部都会有判断当前开启线程的状态，不成立
             则结束线程。正常情况下应阻塞线程，等待线程自行跳出再继续
             '''
+            mission_judge()
             if mission_cnt == 0:
                 if default_thr.is_alive() is False:
                     default_thr.start()
+            elif mission_cnt==1:
+                if through_railway_thr.is_alive() is False:
+                    through_railway_thr.start()
+
 
             if cv2.waitKey(30) == 27:
                 quit_flag = True

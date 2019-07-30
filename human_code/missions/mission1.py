@@ -48,6 +48,7 @@ def color_detect(frame, color_range):
         frame_yellow = cv2.bitwise_and(frame, frame, mask=mask)
 
         cv2.imshow("color_yellow", frame_yellow)
+    return frame_yellow
 
 
 def return_color(event, x, y, flags, param):
