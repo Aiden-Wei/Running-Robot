@@ -3,8 +3,8 @@
 import time
 import os
 import sqlite3 as sql
-import SerialServoCmd as ssc
-import config_serial_servo
+import human_code.SerialServoCmd as ssc
+import human_code.config_serial_servo as config_serial_servo
 import threading
 
 

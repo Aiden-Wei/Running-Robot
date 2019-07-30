@@ -6,6 +6,23 @@ import time
 import numpy as np
 import math
 
+import human_code.Serial_Servo_Running as SSR
+import signal
+import human_code.PWMServo
+
+debug = 1
+Running = True
+stream = "http://127.0.0.1:8080/?action=stream?dummy=param.mjpg"
+cap = cv2.VideoCapture(stream)
+
+orgFrame = None
+get_image_ok = False
+get_line = False
+
+go_straight = '1'
+turn_left   = 'turn_left'
+turn_right  = 'turn_right'
+
 #定义一些参数
 ori_width  =  int(4*160)#原始图像640x480
 ori_height =  int(3*160)
