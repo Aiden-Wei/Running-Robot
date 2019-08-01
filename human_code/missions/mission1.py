@@ -35,19 +35,16 @@ def edge_detection(orgimage, r_w = resize_width, r_h = resize_height, r = roi, l
 
 
 # 设置黄色的范围
-color_range_yellow = [([16, 100, 100], [30, 230, 255])]
+color_range_yellow = ([16, 140, 100], [30, 255, 255])
 
 mask = None
 def color_detect(frame, color_range):
     global mask
-    for (lower, upper) in color_range:
-        lower = np.array(lower, dtype="uint8")  # 颜色下限
-        upper = np.array(upper, dtype="uint8")  # 颜色下限
+    mask = cv2.inRange(frame, np.array(color_range[0]), np.array(color_range[1]))
+    frame_yellow = cv2.bitwise_and(frame, frame, mask=mask)
 
-        mask = cv2.inRange(frame, lower, upper)
-        frame_yellow = cv2.bitwise_and(frame, frame, mask=mask)
-
-        cv2.imshow("color_yellow", frame_yellow)
+    cv2.imshow("color_yellow", frame_yellow)
+    return frame_yellow
 
 
 def return_color(event, x, y, flags, param):
@@ -70,21 +67,24 @@ def getAreaMaxContour(contours, area=100):
                 area_max_contour = c
     return area_max_contour
 
-# cap = cv2.VideoCapture(0)
-# if __name__ == "__main__":
-def through_railway(cap):
-    cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("C:\\Users\\Tonywzt\\Desktop\\赛道视频_2019_07_27\\02台阶.mp4")
+if __name__ == "__main__":
+# def through_railway(cap):
+#     cap = cv2.VideoCapture(0)
     while True:
         ret, frames = cap.read()
-        frame_hsv = frames.copy()
-        cv2.cvtColor(frames, cv2.COLOR_BGR2HSV, frame_hsv)
+        frame_hsv = cv2.cvtColor(frames, cv2.COLOR_BGR2HSV)
         if frames is not None and ret:
             # edge_detection(frames, 160, 120)
             color_detect(frame_hsv, color_range_yellow)
 
             cv2.setMouseCallback('frame', return_color)
         # 画出矩形轮廓
-            cnts, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_L1)  # 找出所有轮廓
+            mask1 = cv2.inRange(frame_hsv, np.array([0, 50, 146]), np.array([10, 255, 255]))
+            mask2 = cv2.inRange(frame_hsv, np.array([160, 50, 146]), np.array([180, 255, 255]))
+            mask2 = cv2.bitwise_or(mask1, mask2, mask=None)
+
+            cnts, _ = cv2.findContours(mask2, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_L1)  # 找出所有轮廓
             cnt_large = getAreaMaxContour(cnts, area=100)  # 找到最大面积的轮廓
             if cnt_large is not None:
                 rect = cv2.minAreaRect(cnt_large)  # 最小外接矩形
@@ -94,8 +94,12 @@ def through_railway(cap):
                 cv2.line(frames, (box[0, 0], box[0, 1]), (box[2, 0], box[2, 1]), line_color, line_thickness)
 
             cv2.imshow("frame", frames)
-            if cv2.waitKey(30)==27:
+            k = cv2.waitKey(30)
+            if k == 27:
                 break
+            elif k == ord('q'):
+                while cv2.waitKey(1) != ord('q'):
+                    cv2.setMouseCallback('frame', return_color)
             # if cnt_large is None:
             #     break
     cv2.destroyAllWindows()
