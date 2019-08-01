@@ -80,7 +80,7 @@ def main():
                     default_thr.start()
 
             if cv2.waitKey(30) == 27:
-                quit_flag = True
+                quit_flag =     True
                 break
     cv2.destroyAllWindows()
 
